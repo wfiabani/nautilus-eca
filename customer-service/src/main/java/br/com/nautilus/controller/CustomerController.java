@@ -11,11 +11,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.nautilus.configuration.CustomerServiceConfiguration;
 import br.com.nautilus.model.CustomerModel;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
+@Tag(name = "Customers Endpoint")
 @RestController
 @RequestMapping("/customer-service")
 public class CustomerController {
 	
+	@Autowired
+	private CustomerServiceConfiguration config;
+	
+	private final String template = "The customer id is: %s <br />Customer Service Version: %s";
+	
+	@Operation(summary = "Retorna dados básicos de um cliente")
 	@GetMapping(value = "/customer/{id}")
 	public String findCustomerById(
 		@PathVariable("id") String id) {
@@ -34,16 +43,10 @@ public class CustomerController {
 		}
 	}
 	
-	@Autowired
-	private CustomerServiceConfiguration config;
-	
-	private final String template = "The customer id is: %s <br />Customer Service Version: %s";
-	
-	@GetMapping("/customer2")
-	public String getBasicInformation(
-			@RequestParam(value="id", defaultValue="") String id
-			) {
-		return id.isEmpty()? "The customer ID is empty, please insert a valid customer ID" : String.format(template, id, config.getCustomerServiceVersion());
+	@Operation(summary = "Retorna um valor parametrizado do server-config, apenas para fins de teste da funcionalidade")
+	@GetMapping("/customer-service-version")
+	public String getCustomerServiceVersion(){
+		return String.format(template, config.getCustomerServiceVersion());
 	}
 
 }

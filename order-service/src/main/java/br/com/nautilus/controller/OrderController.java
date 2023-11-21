@@ -11,13 +11,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import br.com.nautilus.client.CustomerProxy;
 import br.com.nautilus.model.CustomerModel;
 import br.com.nautilus.model.OrderModel;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
+@Tag(name = "Customers Endpoint")
 @RestController
 @RequestMapping("/order-service")
 public class OrderController {
 	
 	@Autowired CustomerProxy customerProxy;
 	
+	@Operation(summary = "Retorna dados básicos de um pedido")
 	@GetMapping(value = "/order/{id}")
 	public String findOrderById(
 		@PathVariable("id") String id) {

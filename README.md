@@ -3,10 +3,12 @@
 POC **em desenvolvimento** sobre arquitetura de micro serviços utilizando:
 - Java 17
 - Spring Boot 3
+- Actuator
 - Spring Cloud
 - Spring Security
 - Load balancing
 - Naming service (Eureka)
+- OpenAPI (Swagger)
 - Flyway and migrations
 - Maven
 - JPA with Postgres Database
