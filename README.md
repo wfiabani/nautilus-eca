@@ -1,4 +1,4 @@
-# nautilus-eca
+# NautilusECA (POC sobre arquitetura de microserviços)
 
 Prova de conceito (POC) em desenvolvimento sobre arquitetura de micro serviços utilizando:
 - Java 17
@@ -12,5 +12,5 @@ Prova de conceito (POC) em desenvolvimento sobre arquitetura de micro serviços 
 - Pipeline CI/CD with Jenkins
 - Conceitos de arquitetura de software mais utilizados no mercado
 
-##Atenção
+## Atenção
 Padrões de desenvolvimento como por exemplo, clean code ou arquitetura hexagonal não estão aplicados ainda.
