@@ -1,0 +1,21 @@
+#actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+        - "*"
+    
+#custom propertie
+eca:
+  serial-number: 456789
+  
+#customer service
+customer-service:
+  customer-service-version: 0.0.1
+  
+    
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka

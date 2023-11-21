@@ -1,0 +1,12 @@
+server:
+  port: 8020
+  
+spring:
+  application:
+    name: order-service
+  config:
+    import: configserver:http://localhost:8888/
+  cloud:
+    config:
+      profile: dev
+
