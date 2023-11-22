@@ -10,7 +10,9 @@ pipeline{
                 }
             }
             steps{
-                sh "mvn package"
+                dir('customer-service'){
+                    sh "mvn package"
+                }
             }
         }
     }
