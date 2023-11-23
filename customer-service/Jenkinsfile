@@ -2,7 +2,7 @@
 pipeline{
     agent none
     stages{
-        stage ('Build'){
+        stage ('Build project'){
             agent{
                 docker { 
                     image 'maven' 
@@ -14,6 +14,17 @@ pipeline{
                     sh "mvn package"
                 }
             }
+        }
+        stage ('Deploy Docker'){
+            steps{
+                dir('customer-service'){
+                    sh 'docker build -t customer-service-image:${BUILD_NUMBER} .'
+                }
+            }
+        }
+        stage('Deploy docker'){
+          sh "docker stop customer-service-image || true && docker rm customer-service-image || true"
+          sh "docker run --name customer-service-image -d -p 8010:8010 customer-service-image:${BUILD_NUMBER}"
         }
     }
 }
