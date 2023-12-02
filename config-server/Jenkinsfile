@@ -10,7 +10,7 @@ pipeline{
                 }
             }
             steps{
-                dir('config-service'){
+                dir('config-server'){
                     sh "mvn package"
                 }
             }
@@ -18,15 +18,15 @@ pipeline{
         stage ('Build Docker image'){
             agent none
             steps{
-                dir('config-service'){
-                    sh 'docker build -t config-service-image:${BUILD_NUMBER} .'
+                dir('config-server'){
+                    sh 'docker build -t config-server-image:${BUILD_NUMBER} .'
                 }
             }
         }
         stage ('Refresh container'){
             steps{
-                sh "docker stop config-service-image || true && docker rm config-service-image || true"
-                sh "docker run --name config-service-image -d -p 8888:8888 config-service-image:${BUILD_NUMBER}"
+                sh "docker stop config-server-image || true && docker rm config-server-image || true"
+                sh "docker run --name config-server-image -d -p 8888:8888 config-server-image:${BUILD_NUMBER}"
             }
         }
     }
