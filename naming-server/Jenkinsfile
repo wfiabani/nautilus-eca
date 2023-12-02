@@ -1,0 +1,33 @@
+#!/usr/bin/env groovy
+pipeline{
+    agent any
+    stages{
+        stage ('Build .jar file'){
+            agent{
+                docker { 
+                    image 'maven' 
+                    args '-u root'
+                }
+            }
+            steps{
+                dir('naming-service'){
+                    sh "mvn package"
+                }
+            }
+        }
+        stage ('Build Docker image'){
+            agent none
+            steps{
+                dir('naming-service'){
+                    sh 'docker build -t naming-service-image:${BUILD_NUMBER} .'
+                }
+            }
+        }
+        stage ('Refresh container'){
+            steps{
+                sh "docker stop naming-service-image || true && docker rm naming-service-image || true"
+                sh "docker run --name naming-service-image -d -p 8761:8761 naming-service-image:${BUILD_NUMBER}"
+            }
+        }
+    }
+}

@@ -1,0 +1,33 @@
+#!/usr/bin/env groovy
+pipeline{
+    agent any
+    stages{
+        stage ('Build .jar file'){
+            agent{
+                docker { 
+                    image 'maven' 
+                    args '-u root'
+                }
+            }
+            steps{
+                dir('config-service'){
+                    sh "mvn package"
+                }
+            }
+        }
+        stage ('Build Docker image'){
+            agent none
+            steps{
+                dir('config-service'){
+                    sh 'docker build -t config-service-image:${BUILD_NUMBER} .'
+                }
+            }
+        }
+        stage ('Refresh container'){
+            steps{
+                sh "docker stop config-service-image || true && docker rm config-service-image || true"
+                sh "docker run --name config-service-image -d -p 8888:8888 config-service-image:${BUILD_NUMBER}"
+            }
+        }
+    }
+}

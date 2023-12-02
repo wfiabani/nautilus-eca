@@ -1,0 +1,33 @@
+#!/usr/bin/env groovy
+pipeline{
+    agent any
+    stages{
+        stage ('Build .jar file'){
+            agent{
+                docker { 
+                    image 'maven' 
+                    args '-u root'
+                }
+            }
+            steps{
+                dir('api-gateway'){
+                    sh "mvn package"
+                }
+            }
+        }
+        stage ('Build Docker image'){
+            agent none
+            steps{
+                dir('api-gateway'){
+                    sh 'docker build -t api-gateway-image:${BUILD_NUMBER} .'
+                }
+            }
+        }
+        stage ('Refresh container'){
+            steps{
+                sh "docker stop api-gateway-image || true && docker rm api-gateway-image || true"
+                sh "docker run --name api-gateway-image -d -p 8765:8765 api-gateway-image:${BUILD_NUMBER}"
+            }
+        }
+    }
+}

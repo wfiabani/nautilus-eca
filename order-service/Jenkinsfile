@@ -1,0 +1,33 @@
+#!/usr/bin/env groovy
+pipeline{
+    agent any
+    stages{
+        stage ('Build .jar file'){
+            agent{
+                docker { 
+                    image 'maven' 
+                    args '-u root'
+                }
+            }
+            steps{
+                dir('order-service'){
+                    sh "mvn package"
+                }
+            }
+        }
+        stage ('Build Docker image'){
+            agent none
+            steps{
+                dir('order-service'){
+                    sh 'docker build -t order-service-image:${BUILD_NUMBER} .'
+                }
+            }
+        }
+        stage ('Refresh container'){
+            steps{
+                sh "docker stop order-service-image || true && docker rm order-service-image || true"
+                sh "docker run --name order-service-image -d -p 8020:8020 order-service-image:${BUILD_NUMBER}"
+            }
+        }
+    }
+}
