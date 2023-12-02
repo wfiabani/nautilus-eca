@@ -10,7 +10,7 @@ pipeline{
                 }
             }
             steps{
-                dir('naming-service'){
+                dir('naming-server'){
                     sh "mvn package"
                 }
             }
@@ -19,14 +19,14 @@ pipeline{
             agent none
             steps{
                 dir('naming-service'){
-                    sh 'docker build -t naming-service-image:${BUILD_NUMBER} .'
+                    sh 'docker build -t naming-server-image:${BUILD_NUMBER} .'
                 }
             }
         }
         stage ('Refresh container'){
             steps{
-                sh "docker stop naming-service-image || true && docker rm naming-service-image || true"
-                sh "docker run --name naming-service-image -d -p 8761:8761 naming-service-image:${BUILD_NUMBER}"
+                sh "docker stop naming-server-image || true && docker rm naming-server-image || true"
+                sh "docker run --name naming-server-image -d -p 8761:8761 naming-server-image:${BUILD_NUMBER}"
             }
         }
     }
