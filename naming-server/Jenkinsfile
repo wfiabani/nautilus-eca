@@ -18,7 +18,7 @@ pipeline{
         stage ('Build Docker image'){
             agent none
             steps{
-                dir('naming-service'){
+                dir('naming-server'){
                     sh 'docker build -t naming-server-image:${BUILD_NUMBER} .'
                 }
             }
