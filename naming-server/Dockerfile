@@ -1,6 +1,6 @@
 FROM openjdk:17-oracle
 VOLUME /tmp
-ADD target/naming-server-0.0.1-SNAPSHOT.jar app.jar
+ADD target/naming-server-0.0.1-SNAPSHOT.jar naming-server.jar
 EXPOSE 8761
-RUN bash -c 'touch app.jar'
-ENTRYPOINT ["java", "-jar", "/app.jar" "-Dserver.port=8761"]
+RUN bash -c 'touch naming-server.jar'
+ENTRYPOINT ["java", "-jar", "/naming-server.jar" "-Dserver.port=8761"]
