@@ -12,7 +12,6 @@ pipeline{
             steps{
                 dir('customer-service'){
                     sh "mvn package"
-                    sh "cp target/customer-service-0.0.1-SNAPSHOT.jar /tmp/customer-service.jar"
                 }
             }
         }
@@ -20,7 +19,7 @@ pipeline{
             agent none
             steps{
                 dir('customer-service'){
-                    sh 'docker build -t customer-service-image:${BUILD_NUMBER} .'
+                    sh 'docker build -t customer-service-image:${BUILD_NUMBER} .'z
                 }
             }
         }
