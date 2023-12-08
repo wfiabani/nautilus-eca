@@ -19,14 +19,14 @@ pipeline{
             agent none
             steps{
                 dir('customer-service'){
-                    sh 'docker build -t customer-service-image:${BUILD_NUMBER} .'
+                    sh 'docker build -t customer-service-test-image:${BUILD_NUMBER} .'
                 }
             }
         }
         stage ('Refresh container'){
             steps{
-                sh "docker stop customer-service-image || true && docker rm customer-service-image || true"
-                sh "docker run --name customer-service-image -d -p 8010:8010 customer-service-image:${BUILD_NUMBER}"
+                sh "docker stop customer-service-test-image || true && docker rm customer-service-test-image || true"
+                sh "docker run --name customer-service-test-image -d -p 8010:8010 customer-service-test-image:${BUILD_NUMBER}"
             }
         }
     }
