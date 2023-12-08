@@ -19,7 +19,7 @@ pipeline{
             agent none
             steps{
                 dir('customer-service'){
-                    sh 'docker build -t customer-service-image:${BUILD_NUMBER} .'z
+                    sh 'docker build -t customer-service-image:${BUILD_NUMBER} .'
                 }
             }
         }
