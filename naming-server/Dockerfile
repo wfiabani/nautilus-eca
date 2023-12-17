@@ -1,5 +1,5 @@
 FROM openjdk:17-oracle
-VOLUME /tmp
+VOLUME /tmp/naming-server
 RUN ls
 ADD target/naming-server-0.0.1-SNAPSHOT.jar /app.jar
 EXPOSE 8761

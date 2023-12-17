@@ -19,7 +19,7 @@ pipeline{
             agent none
             steps{
                 dir('naming-server'){
-                    sh 'docker build -t naming-server-image:${BUILD_NUMBER} /home/wfiabani/development/nautilus-eca/naming-server'
+                    sh 'docker build -t naming-server-image:${BUILD_NUMBER} .'
                 }
             }
         }
