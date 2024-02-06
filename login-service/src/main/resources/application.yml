@@ -1,0 +1,29 @@
+server:
+  port: 9999
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/eca_login
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    generate-ddl: true
+    
+  application:
+    name: login-service
+  config:
+    import: optional:configserver:http://localhost:8888/
+  cloud:
+    config:
+      profile: dev
+    
+
+
+
+nautilus:
+  jwt:
+    secret: ${NAUTILUS_JWT_SECRET:IWillMakeAllMyDreamsComeTrue}
+    

@@ -11,6 +11,7 @@ import java.util.List;
 import org.jsoup.Jsoup;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +45,7 @@ public class CustomerController {
 				"fiabani.wilian@gmail.com"
 		);
 		ObjectMapper mapper = new ObjectMapper();
+		
 		try {			
 			return mapper.writeValueAsString( customer );
 		}catch(Exception e) {
